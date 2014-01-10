@@ -283,11 +283,7 @@ class EventsExtension extends Nette\DI\CompilerExtension
 		$listeners = array();
 		foreach ($this->listeners as $serviceName => $eventNames) {
 			foreach ($eventNames as $eventName) {
-				list($namespace, $event) = Kdyby\Events\Event::parseName($eventName);
 				$listeners[$eventName][] = $serviceName;
-				if ($namespace !== NULL) {
-					$listeners[$event][] = $serviceName;
-				}
 			}
 		}
 

@@ -154,10 +154,7 @@ class EventManager extends Doctrine\Common\EventManager
 				throw new InvalidListenerException("Event listener '" . get_class($listener[0]) . "' has no method '" . $listener[1] . "'");
 			}
 
-			$this->listeners[$event][NULL][$priority][] = $listener;
-			if ($namespace !== NULL) {
-				$this->listeners[$event][$namespace][$priority][] = $listener;
-			}
+			$this->listeners[$event][$namespace][$priority][] = $listener;
 
 			unset($this->sorted[$event]);
 			unset($this->sorted[$eventName]);
@@ -180,7 +177,7 @@ class EventManager extends Doctrine\Common\EventManager
 		}
 
 		foreach ((array) $unsubscribe as $eventName) {
-			list($namespace, $event) = Event::parseName($eventName);
+			list(, $event) = Event::parseName($eventName);
 			$listener = !is_array($subscriber) ? array($subscriber, $event) : $subscriber;
 
 			foreach ($this->listeners[$event] as $namespaces => $priorities) {
